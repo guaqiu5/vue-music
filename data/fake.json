@@ -1,0 +1,22 @@
+[{
+    "songid": "1",
+    "title": "青花瓷",
+    "author": "周杰伦",
+    "isSale": "1",
+    "price": "3",
+    "src": "/static/青花瓷.mp3"
+}, {
+    "songid": "2",
+    "title": "稻香",
+    "author": "周杰伦",
+    "isSale": "0",
+    "price": "2",
+    "src": "/static/稻香.mp3"
+}, {
+    "songid": "3",
+    "title": "红尘客栈",
+    "author": "周杰伦",
+    "isSale": "1",
+    "price": "5",
+    "src": "/static/红尘客栈.mp3"
+}]
