@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="GBK">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script> -->
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{appName}}</h1>
+        <audio controls>
+            <source :src="currentPlayingSong" type="audio/mpeg" @ended="handleEnded">
+          </audio> {{currentPlayingSong}}
+        <div class="musicList">
+            <div class="musicListItem">
+                <template v-for="(item) of musicList" :key="item.songid">
+                    <div class="musicListItemTitle">
+                       <h2>歌名:{{item.author}} - {{item.title}}</h2> 
+                    </div>
+                    <div class="musicListItemAuthor">
+                        <h3>作者:{{item.author}}</h3>
+                    </div>
+                    <div class="musicListItemIsSale" > <div>
+                        <span v-if="item.isSale==0">未可售</span>
+                        <span v-else="">可售</span>
+                        <button :disabled="item.isSale==0" @click="purchaseSong(item)">购买</button>
+                        </div>
+                    </div>
+                    <div class="musicListItemPrice">
+                        <h3>价格:{{item.price}}</h3>
+                       
+                    </div>
+                </template>
+            </div>
+            <br/>
+        </div>
+        <div class="musicController">
+            <button @click="handleNextMusic">播放下一首</button>
+        </div>
+    </div>
+
+</body>
+<script>
+    const app = new Vue({
+        el: '#app',
+        mounted() {
+
+
+            axios.get('./data/fake.json').then((response) => {
+                //console.log(response);
+
+
+                this.musicList = response.data;
+                //console.log(this.musicList);
+            })
+        },
+        data() {
+            return {
+                appName: "Vue2-music",
+                musicList: [],
+                currentPlayingSongId: 1,
+            }
+        },
+        methods: {
+            purchaseSong(item) {
+                if (item.isSale == 1) alert("购买成功！")
+                else alert("无法购买")
+            },
+            handleNextMusic() {
+                if (this.currentPlayingSongId == this.musicList.length) this.currentPlayingSongId = 1;
+                else this.currentPlayingSongId++;
+                console.log(this.currentPlayingSongId)
+            },
+            handleEnded() {
+                if (this.currentPlayingSongId == this.musicList.length) this.currentPlayingSongId = 1;
+                else this.currentPlayingSongId++;
+
+            }
+        },
+        computed: {
+            currentPlayingSong: {
+                get() {
+                    let _temp = JSON.parse(JSON.stringify(this.musicList))
+                        //问题是怎么得到音乐链接src
+
+
+                }
+            }
+        }
+    })
+</script>
+
+</html>
